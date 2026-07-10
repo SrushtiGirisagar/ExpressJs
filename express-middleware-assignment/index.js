@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,9 +17,10 @@ function secondLogger(req, res, next) {
 
 app.use(firstLogger);
 app.use(secondLogger);
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-  res.send("Welcome to the Express middleware assignment!");
+  res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
 app.get("/users", (req, res) => {
